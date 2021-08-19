@@ -2,7 +2,19 @@ package org.mns237.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
+@Data
+@Builder
+@AllArgsConstructor
 @Entity
 @Table(name="users")
 public class Users {
@@ -17,9 +29,13 @@ public class Users {
     @Column(name="lName")
     String lName;
     @Column(name="email")
+    @Email(message = "*Please provide a valid Email")
+    @NotEmpty(message ="*please provide an email")
     String email;
     @Column(name="password")
     String password;
+    @Length(min = 6, message = "*Your password must be atleast 6 characters")
+    @NotEmpty(message = "*please provide a password")
     @Column(name="passwordConfirmation")
     String passwordConfirmation;
     @Column(name="isAdmin")
@@ -32,6 +48,10 @@ public class Users {
     String description;
     @Column(name="createdDate")
     Date createdDate;
+    private int active;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns =  @JoinColumn (name = "role_id"))
+    private Set<Role> roles;
 
     public Users(){
 
@@ -138,5 +158,13 @@ public class Users {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public void setRoles(HashSet<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setActive(int i) {
+        this.active = i;
     }
 }

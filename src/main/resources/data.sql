@@ -111,7 +111,7 @@ INSERT INTO products VALUES(15, 'Mitsubishi','61957-9401','Mauris lacinia sapien
 
 
 
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE;
 create table users (
 id int8 not null,
 avater varchar(255),

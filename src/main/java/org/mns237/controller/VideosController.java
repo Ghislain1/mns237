@@ -27,7 +27,7 @@ public class VideosController {
         this.videosService = videosService;
     }
 
-    // geting all videos from DB;
+    // getting all videos from DB;
     @GetMapping("/video/list")
         public List<Items> getVideos(){
             return videosService.getAllVideos();
